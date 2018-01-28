@@ -9,7 +9,7 @@ import java.util.List;
  * 
  * @author hereton
  */
-public class Coin implements Comparable<Coin> {
+public class Coin implements Comparable<Coin>, Valuable {
 	private double value;
 	private String currency;
 

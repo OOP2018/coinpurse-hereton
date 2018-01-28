@@ -16,11 +16,11 @@ public class MoneyUtill {
 	 * @param currency that want to filter.
 	 * @return coins with input currency.
 	 */
-	static List<Coin> filterByCurrency(List<Coin> coins, String currency) {
-		List<Coin> sameCurrency = new ArrayList<>();
-		for (Coin coin : coins) {
-			if (coin.getCurrency().equalsIgnoreCase(currency))
-				sameCurrency.add(coin);
+	static List<Valuable> filterByCurrency(List<Valuable> values, String currency) {
+		List<Valuable> sameCurrency = new ArrayList<>();
+		for (Valuable value : values) {
+			if (value.getCurrency().equalsIgnoreCase(currency))
+				sameCurrency.add(value);
 		}
 		return sameCurrency;
 	}

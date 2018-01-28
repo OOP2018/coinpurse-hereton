@@ -15,9 +15,8 @@ public class Main {
 	 *            not used
 	 */
 	public static void main(String[] args) {
-		Purse p = new Purse(10);
-		ConsoleDialog cd = new ConsoleDialog(p);
-		cd.run();
-
+		 Purse p = new Purse(10);
+		 ConsoleDialog cd = new ConsoleDialog(p);
+		 cd.run();
 	}
 }
