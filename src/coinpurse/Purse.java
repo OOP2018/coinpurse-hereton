@@ -16,6 +16,29 @@ import java.util.List;
 public class Purse {
 	/** Collection of objects in the purse. */
 	private List<Valuable> money;
+	
+	/**
+	 * Compare two objects that implement Valuable. First compare them by currency,
+	 * so that "Baht" < "Dollar". If both objects have the same currency, order them
+	 * by value.
+	 */
+	private Comparator<Valuable> comp = new Comparator<Valuable>() {
+		@Override
+		public int compare(Valuable o1, Valuable o2) {
+			if (o1.getCurrency().compareTo(o2.getCurrency()) < 0) {
+				return -1;
+			}
+			if (o1.getCurrency().compareTo(o2.getCurrency()) == 0) {
+				return 0;
+			}
+			if (o1.getCurrency().compareTo(o2.getCurrency()) > 0) {
+				return 1;
+			}
+			// sort big to small
+			return (int) Math.signum(o2.getValue() - o1.getValue());
+		}
+
+	};
 
 	/**
 	 * Capacity is maximum number of items the purse can hold. Capacity is set when
@@ -78,35 +101,14 @@ public class Purse {
 
 	/**
 	 * Insert a valuable (Coin, bank note,etc.) into the purse. The value is only
-	 * inserted if the purse has space for it and have positive value. No
-	 * fake values!
+	 * inserted if the purse has space for it and have positive value. No fake
+	 * values!
 	 * 
 	 * @param value
 	 *            is a value object to insert into purse
 	 * @return true if coin inserted, false if can't insert
 	 */
 	public boolean insert(Valuable value) {
-		/**
-		 * Compare two objects that implement Valuable. First compare them by currency,
-		 * so that "Baht" < "Dollar". If both objects have the same currency, order them
-		 * by value.
-		 */
-		Comparator<Valuable> comp = new Comparator<Valuable>() {
-			@Override
-			public int compare(Valuable o1, Valuable o2) {
-				if (o1.getCurrency().equalsIgnoreCase("bath")) {
-					if (o2.getCurrency().equalsIgnoreCase("dollar"))
-						return -1;
-				}
-				if (o1.getCurrency().equalsIgnoreCase("dollar")) {
-					if (o2.getCurrency().equalsIgnoreCase("bath"))
-						return 1;
-				}
-				// sort big to small
-				return (int) Math.signum(o2.getValue() - o1.getValue());
-			}
-
-		};
 		// if the purse is already full then can't insert anything.
 		if (isFull() || value.getValue() <= 0)
 			return false;
@@ -122,8 +124,8 @@ public class Purse {
 	 * 
 	 * @param amount
 	 *            is the amount to withdraw
-	 * @return array of value objects for money withdrawn, or null if cannot withdraw
-	 *         requested amount.
+	 * @return array of value objects for money withdrawn, or null if cannot
+	 *         withdraw requested amount.
 	 */
 	public Valuable[] withdraw(double amount) {
 		List<Valuable> temp = new ArrayList<>(getCapacity());
