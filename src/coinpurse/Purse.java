@@ -130,12 +130,11 @@ public class Purse {
 	public Valuable[] withdraw(double amount) {
 		if (amount < 0)
 			return null;
-		Valuable[] temp = withdraw(new Money(amount, "Bath"));
-		return temp;
+		return withdraw(new Money(amount, "Bath"));
 	}
 
 	public Valuable[] withdraw(Valuable amount) {
-		if (amount == null || amount.getValue() < 0)
+		if (amount.getClass() == null || amount.getValue() < 0)
 			return null;
 		List<Valuable> temp = new ArrayList<>(this.getCapacity());
 		double amountValue = amount.getValue();
