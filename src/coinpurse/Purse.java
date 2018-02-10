@@ -16,7 +16,7 @@ import java.util.List;
 public class Purse {
 	/** Collection of objects in the purse. */
 	private List<Valuable> money;
-	
+
 	/**
 	 * Compare two objects that implement Valuable. First compare them by currency,
 	 * so that "Baht" < "Dollar". If both objects have the same currency, order them
@@ -106,7 +106,7 @@ public class Purse {
 	 * 
 	 * @param value
 	 *            is a value object to insert into purse
-	 * @return true if coin inserted, false if can't insert
+	 * @return true if value inserted, false if can't insert
 	 */
 	public boolean insert(Valuable value) {
 		// if the purse is already full then can't insert anything.
@@ -128,7 +128,7 @@ public class Purse {
 	 *         withdraw requested amount.
 	 */
 	public Valuable[] withdraw(double amount) {
-		List<Valuable> temp = new ArrayList<>(getCapacity());
+		List<Valuable> temp = new ArrayList<>(this.getCapacity());
 		if (amount < 0) {
 			return null;
 		}
@@ -139,6 +139,30 @@ public class Purse {
 			}
 		}
 		if (amount == 0) {
+			for (Valuable item : temp) {
+				money.remove(item);
+			}
+			Valuable[] withDarw = new Valuable[temp.size()];
+			withDarw = temp.toArray(withDarw);
+			return withDarw;
+		}
+		return null;
+	}
+
+	public Valuable[] withdraw(Valuable amount) {
+		if (amount.getClass() == null && amount.getValue() < 0)
+			return null;
+		List<Valuable> temp = new ArrayList<>(this.getCapacity());
+		double amountValue = amount.getValue();
+		for (Valuable value : money) {
+			if (value.getCurrency().equalsIgnoreCase(amount.getCurrency())) {
+				if (value.getValue() <= amountValue) {
+					amountValue -= value.getValue();
+					temp.add(value);
+				}
+			}
+		}
+		if (amountValue == 0) {
 			for (Valuable item : temp) {
 				money.remove(item);
 			}
