@@ -22,7 +22,6 @@ public class BankNote extends Money {
 	 */
 	public BankNote(double value, String currency) {
 		super(value,currency);
-		System.out.println(nextSerialNumber);
 		this.serialNumber = nextSerialNumber;
 		nextSerialNumber += 1;
 	}

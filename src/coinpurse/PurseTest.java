@@ -22,7 +22,7 @@ import org.junit.Test;
 public class PurseTest {
 	/** tolerance for comparing two double values */
 	private static final double TOL = 1.0E-6;
-	private static final String CURRENCY = "BTC";
+	private static final String CURRENCY = "Bath";
 
 	/**
 	 * Sets up the test fixture. Called before every test method.
@@ -133,6 +133,7 @@ public class PurseTest {
 			assertTrue(purse.insert(coin));
 			assertEquals(value, purse.getBalance(), TOL);
 			Valuable[] result = purse.withdraw(value);
+			System.out.println(result == null);
 			assertTrue(result != null);
 			assertEquals(1, result.length);
 			assertSame(coin, result[0]); // should be same object

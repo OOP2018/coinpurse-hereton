@@ -128,29 +128,14 @@ public class Purse {
 	 *         withdraw requested amount.
 	 */
 	public Valuable[] withdraw(double amount) {
-		List<Valuable> temp = new ArrayList<>(this.getCapacity());
-		if (amount < 0) {
+		if (amount < 0)
 			return null;
-		}
-		for (Valuable value : money) {
-			if (value.getValue() <= amount) {
-				amount -= value.getValue();
-				temp.add(value);
-			}
-		}
-		if (amount == 0) {
-			for (Valuable item : temp) {
-				money.remove(item);
-			}
-			Valuable[] withDarw = new Valuable[temp.size()];
-			withDarw = temp.toArray(withDarw);
-			return withDarw;
-		}
-		return null;
+		Valuable[] temp = withdraw(new Money(amount, "Bath"));
+		return temp;
 	}
 
 	public Valuable[] withdraw(Valuable amount) {
-		if (amount.getClass() == null && amount.getValue() < 0)
+		if (amount == null || amount.getValue() < 0)
 			return null;
 		List<Valuable> temp = new ArrayList<>(this.getCapacity());
 		double amountValue = amount.getValue();
@@ -162,6 +147,7 @@ public class Purse {
 				}
 			}
 		}
+
 		if (amountValue == 0) {
 			for (Valuable item : temp) {
 				money.remove(item);
@@ -179,6 +165,19 @@ public class Purse {
 	 */
 	public String toString() {
 		return String.format("%d coins with %.2f values", this.count(), this.getBalance());
+	}
+
+	public static void main(String[] args) {
+		Purse purse = new Purse(10);
+		double[] values = { 1, 20, 0.5, 10 }; // values of coins we will insert
+
+		for (double value : values) {
+			Valuable coin = new Coin(value, "Bath");
+			purse.insert(coin);
+			Valuable[] result = purse.withdraw(value);
+			System.out.println(result != null);
+
+		}
 	}
 
 }
