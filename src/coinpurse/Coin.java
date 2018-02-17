@@ -19,7 +19,6 @@ public class Coin extends Money {
 		super(value, currency);
 	}
 
-	
 	/**
 	 * compare coins with input coin.
 	 * 
@@ -31,9 +30,17 @@ public class Coin extends Money {
 	}
 
 	/**
-	 * Example "5-Bath.","50-Dollar."
+	 * Example "0.25-Satang.","5-Baht.","50-Dollar."
 	 */
 	public String toString() {
+		if (this.currency.equalsIgnoreCase("baht")) {
+			if (this.value < 1.0)
+				return this.getValue() + "-Satang.";
+		}
+		if (this.currency.equalsIgnoreCase("ringgit")) {
+			if (this.value < 1.0)
+				return this.getValue() + "-Sen.";
+		}
 		return this.getValue() + "-" + this.getCurrency() + ".";
 	}
 

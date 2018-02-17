@@ -14,6 +14,7 @@ import java.util.List;
  * @author hereton
  */
 public class Purse {
+	MoneyFactory factory = MoneyFactory.getInstace();
 	/** Collection of objects in the purse. */
 	private List<Valuable> money;
 
@@ -130,20 +131,19 @@ public class Purse {
 	public Valuable[] withdraw(double amount) {
 		if (amount < 0)
 			return null;
-		return withdraw(new Money(amount, "Bath"));
+		return withdraw(factory.createMoney(amount));
 	}
 
 	public Valuable[] withdraw(Valuable amount) {
 		if (amount.getClass() == null || amount.getValue() < 0)
 			return null;
+		List<Valuable> filteredMoney = MoneyUtill.filterByCurrency(money, amount.getCurrency());
 		List<Valuable> temp = new ArrayList<>(this.getCapacity());
 		double amountValue = amount.getValue();
-		for (Valuable value : money) {
-			if (value.getCurrency().equalsIgnoreCase(amount.getCurrency())) {
-				if (value.getValue() <= amountValue) {
-					amountValue -= value.getValue();
-					temp.add(value);
-				}
+		for (Valuable value : filteredMoney) {
+			if (value.getValue() <= amountValue) {
+				amountValue -= value.getValue();
+				temp.add(value);
 			}
 		}
 

@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,6 +22,7 @@ public class PurseTest {
 	/** tolerance for comparing two double values */
 	private static final double TOL = 1.0E-6;
 	private static final String CURRENCY = "Bath";
+	private static long serailnumber = 1000001;
 
 	/**
 	 * Sets up the test fixture. Called before every test method.
@@ -39,7 +39,7 @@ public class PurseTest {
 
 	/** Make a banknote with default currency */
 	private Valuable makeBankNote(double value) {
-		return new BankNote(value, CURRENCY);
+		return new BankNote(value, CURRENCY, serailnumber++);
 	}
 
 	/** Easy test that the Purse constructor is working. */
@@ -79,7 +79,7 @@ public class PurseTest {
 	public void testInsertNoValue() {
 		Purse purse = new Purse(3);
 		Valuable fakeCoin = new Coin(0, CURRENCY);
-		Valuable fakeBank = new BankNote(0, CURRENCY);
+		Valuable fakeBank = new BankNote(0, CURRENCY, 12);
 
 		assertFalse(purse.insert(fakeCoin));
 		assertFalse(purse.insert(fakeBank));
@@ -158,7 +158,7 @@ public class PurseTest {
 		assertEquals(amount1, sum(wd1), TOL);
 
 		assertEquals(amount2, purse.getBalance(), TOL);
-		Valuable[] wd2 = purse.withdraw(amount2);
+		 purse.withdraw(amount2);
 
 		// should be empty now
 		assertEquals(0, purse.getBalance(), TOL);

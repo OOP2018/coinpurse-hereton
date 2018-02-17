@@ -8,7 +8,6 @@ package coinpurse;
  *
  */
 public class BankNote extends Money {
-	private static long nextSerialNumber = 1000000;
 	private long serialNumber;
 
 	/**
@@ -20,10 +19,9 @@ public class BankNote extends Money {
 	 * @param currency
 	 *            input currency
 	 */
-	public BankNote(double value, String currency) {
-		super(value,currency);
-		this.serialNumber = nextSerialNumber;
-		nextSerialNumber += 1;
+	public BankNote(double value, String currency, long serialNumber) {
+		super(value, currency);
+		this.serialNumber = serialNumber;
 	}
 
 	/**
@@ -35,12 +33,11 @@ public class BankNote extends Money {
 		return this.serialNumber;
 	}
 
-
 	/**
 	 * Example "20-Bath note 1000000", "100-Dollar note 1000001"
 	 */
 	public String toString() {
-		return String.format("%f-%s note [%d]", this.getValue(), this.getCurrency(), this.serialNumber);
+		return String.format("%.2f-%s note [%d]", this.getValue(), this.getCurrency(), this.serialNumber);
 	}
 
 }
